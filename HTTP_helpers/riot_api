@@ -1,0 +1,25 @@
+var https = require('https');
+
+var apiKey = '2d13bb23-9bde-4668-82a0-2c0615eb6a92'
+
+exports.getSummonerStatsByName = function(name, cb){
+
+  console.log("getting summoner")
+
+  https.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + name + '?api_key=' + apiKey, function(response, err) {
+    
+    if (err) { console.log(err) }
+
+    var data = '';
+
+    response.on('data', function(stream){
+      data += stream
+    })
+
+    response.on('end', function(){
+      cb(data);
+    })
+    
+  })
+
+}
